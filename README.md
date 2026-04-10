@@ -11,12 +11,17 @@ An url shrinker app using Java with Spring boot with some deep computer engineer
 **3 - Endpoints**: two endpoints it is enought to solve this problem
 
 Request
+
 **(POST: /api/v1/shorten)** 
+
 **body**: {"url": "https://example.com...."}
 
 Response
+
 **(GET: "bit.ly/z941dadj")**
+
 Status code: 301/302
+
 Header
   Location: "https://example.com"
 
