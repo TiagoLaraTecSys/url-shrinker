@@ -57,7 +57,7 @@ The url generated has to be only numbers (0-9) and chars [az AZ].
 
     0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 
-Finding the minimum char length of the shortcode.
+Finding the max and shorter char length of the shortcode.
 
 | Char quantity | Max number of URLs                        |
 |---------------|-------------------------------------------|
@@ -69,7 +69,7 @@ Finding the minimum char length of the shortcode.
 | 6             | 62^1 = 56.800.235.584                     |
 | 7             | 62^1 = 3.521.614.606.208 = ~3,5 trillions |
 
-The minimum char length have to be **7**, because we must be capable to store these quantity of url, based on Non-functional requirements:
+The maximum char length could be **7**, because we must be capable to store these quantity of url, based on Non-functional requirements:
 
     100.000.000 * 365 * 10 = 365 billions of urls
 
