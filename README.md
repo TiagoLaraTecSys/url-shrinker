@@ -103,4 +103,11 @@ So we have to sequencial generate a decimal number and convert him to equivalent
 | ....... | ....... |
 | 61      | z       |
 
-    sas
+    14.000.000 (decimal) = wk2V (base62)
+
+### Using Redis to generate incremental decimal Id
+
+To avoid colision when scaling the services, the decimal Id generation is going be by Redis. In that way we can assure Atomic and ThreadSafe operations.
+There are some negative points choosing this design, we add network latency and faill point in redis cluster, if Redis fall, we cannot generate Id.
+
+![diagram](Diagrama.png)

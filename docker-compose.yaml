@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+
+  redis:
+    image: redis:7
+    container_name: url-shorter-redis
+    restart: always
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    ports:
+      - "6378:6378"
+    networks:
+      - nf-network
+
+  api:
+    build: .
+    container_name: url-shorter-api
+    depends_on:
+      redis:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    networks:
+      - nf-network
+    environment:
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6378
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/url_shorter?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
+
+volumes:
+  mysql_data:
+
+networks:
+  nf-network:
+    driver: bridge

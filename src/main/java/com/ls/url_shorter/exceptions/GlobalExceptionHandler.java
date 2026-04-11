@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler{
@@ -27,5 +28,11 @@ public class GlobalExceptionHandler{
         responseError.setErrors(errorsList);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
+    }
+
+    @ExceptionHandler(UrlNotFoundException.class)
+    public ResponseEntity<Object> urlNotFoundException(UrlNotFoundException e) {
+
+        return ResponseEntity.notFound().build();
     }
 }
