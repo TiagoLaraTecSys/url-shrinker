@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class UrlShorterEntity {
 
     @Id
-    @Column(name = "short_code", nullable = false, length = 10)
+    @Column(name = "short_code", nullable = false, columnDefinition = "VARCHAR(10) COLLATE utf8mb4_bin")
     private String shortCode;
 
     @Column(name = "original_url", nullable = false, length = 2048)

@@ -28,7 +28,6 @@ public class ShorterUrlService {
         UrlShorterEntity entity = new UrlShorterEntity();
         entity.setOriginalUrl(input.url());
         entity.setShortCode(urlPath);
-
         repository.save(entity);
         return urlPath;
     }

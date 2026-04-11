@@ -20,24 +20,13 @@ public class GenerateShortedCode {
     }
 
     public String generateShortCode() {
-        String redisId = redisTemplate.opsForValue().get(REDIS_KEY);
+        Long id = redisTemplate.opsForValue().increment(REDIS_KEY);
 
-        if (redisId == null || redisId.isEmpty()) {
-            LOG.error("[ERROR] No value found for decimalId");
-            throw new RedisLoadingException("No value found for decimalId");
-        }
-
-        long decimal = Long.parseLong(redisId);
-
-        String shortedCode =  DecimalToBase62Converter.convertDecimal(decimal);
-
-        long newValue = redisTemplate.opsForValue().increment(REDIS_KEY);
-
-        if (newValue == decimal) {
-            LOG.error("[ERROR] Error incrementing id actual: {} | new: {}", decimal, newValue);
+        if (id == null) {
             throw new RedisCommandExecutionException("Error incrementing id");
         }
-
-        return shortedCode;
+        String shortCode = DecimalToBase62Converter.convertDecimal(id);
+        LOG.info("[INFO] id={} shortCode={}", id, shortCode);
+        return shortCode;
     }
 }

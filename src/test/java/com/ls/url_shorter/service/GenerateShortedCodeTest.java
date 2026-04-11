@@ -33,38 +33,15 @@ public class GenerateShortedCodeTest {
     }
 
     @Test
-    void shouldThrowErrorIfRedisDoNotReturnAnyValue() {
-
-        when(valueOperations.get(any())).thenReturn(null);
-
-        assertThrows(RedisLoadingException.class, () -> {
-           generateShortedCode.generateShortCode();
-        });
-
-    }
-
-    @Test
     void shouldGenerateShortedCodeWithDecimalId() {
 
-        when(valueOperations.get(any())).thenReturn("14000000");
         when(valueOperations.increment(any())).thenReturn(14000001L);
 
         String shortedCode = generateShortedCode.generateShortCode();
 
         verify(valueOperations, atLeastOnce()).increment("decimalId");
 
-        assertEquals("wk2S", shortedCode);
-
-    }
-
-    @Test
-    void shouldThrowErrorIfNotIncrementedDecimalId() {
-
-        when(valueOperations.get(any())).thenReturn("14000000");
-        when(valueOperations.increment(any())).thenReturn(14000000L);
-
-        assertThrows(RedisCommandExecutionException.class, ()->generateShortedCode.generateShortCode());
-
+        assertEquals("wk2T", shortedCode);
 
     }
 }
