@@ -2,13 +2,14 @@ package com.ls.url_shorter.controller;
 
 import com.ls.url_shorter.service.ShorterUrlService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.net.URI;
 
 @RestController
 public class ShorterUrlController {
@@ -32,5 +33,19 @@ public class ShorterUrlController {
 
         return ResponseEntity.ok(shortUrlResponse);
 
+    }
+
+    @GetMapping(value = "/{shortCode}")
+    public ResponseEntity<Void> getOriginalUrlRedirect(
+            @PathVariable String shortCode,
+            HttpServletResponse response
+    ) throws IOException {
+
+        String originalUrl = this.service.getOriginalUrl(shortCode);
+
+        return ResponseEntity
+                .status(302)
+                .location(URI.create(originalUrl))
+                .build();
     }
 }
