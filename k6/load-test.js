@@ -5,13 +5,26 @@ import { check, sleep } from 'k6';
 //  vus: 50,            // usuários simultâneos
 //  duration: '30s',    // duração
 //};
+//
+//export const options = {
+//  stages: [
+//    { duration: '30s', target: 20 },
+//    { duration: '10s', target: 500 }, // pico absurdo
+//    { duration: '30s', target: 50 },
+//    { duration: '30s', target: 0 },
+//  ],
+//};
 
+//Saturacao progressiva
 export const options = {
   stages: [
-    { duration: '30s', target: 20 },
-    { duration: '10s', target: 500 }, // pico absurdo
-    { duration: '30s', target: 50 },
-    { duration: '30s', target: 0 },
+    { duration: '2m', target: 50 },    // baseline
+    { duration: '2m', target: 100 },   // leve
+    { duration: '2m', target: 200 },   // moderado
+    { duration: '2m', target: 400 },   // pesado
+    { duration: '2m', target: 800 },   // stress alto
+    { duration: '2m', target: 1200 },  // saturação real
+    { duration: '2m', target: 0 },     // recovery
   ],
 };
 
